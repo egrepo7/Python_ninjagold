@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ninja Gold</title>
+	<link rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}">
+</head>
+<body>
+	<div id="container">
+		<h1>The Great VIKING Game</h1>
+		<div id="goldcount">
+			<p>Your Gold:<textarea name="gold" cols="20" rows="1">{{ session['gold'] }}</textarea></p>
+		</div>
+
+		<div class="pillage">
+			<h3>Farm</h3>
+			<p>(pillage 10-20 gold)</p>
+			<form action="/process_gold" method="post">
+				<input type="hidden" name="action" value="farm">
+				<input type="submit" value="PILLAGE">
+			</form>
+		</div>
+		<div class="pillage">
+			<h3>Cave</h3>
+			<p>(pillage 5-10 gold)</p>
+			<form action="/process_gold" method="post">
+				<input type="hidden" name="action" value="cave">
+				<input type="submit" value="PILLAGE">
+			</form>
+		</div>
+		<div class="pillage">
+			<h3>House</h3>
+			<p>(pillage 2-5 gold)</p>
+			<form action="/process_gold" method="post">
+				<input type="hidden" name="action" value="house">
+				<input type="submit" value="PILLAGE">
+			</form>
+		</div>
+		<div class="pillage">
+			<h3>Casino</h3>
+			<p>(win/lose 0-50 gold)</p>
+			<form action="/process_gold" method="post">
+				<input type="hidden" name="action" value="casino">
+				<input type="submit" value="PILLAGE">
+			</form>
+		</div>
+
+		<p>How much you have pillaged?!</p>
+		<div id="pillageinfo">
+			{% for text in session['text']%}
+			{% if "taken" in text %}
+				<div class="green">
+					<p> {{ text }} </p>
+				</div>
+			{% elif "won" in text %}
+				<div class="green">
+					<p>{{ text }}</p>
+				</div>
+			{% elif "lost" in text %}
+				<div class="red">
+					<p>{{ text }}</p>
+				</div>
+			{% endif %}
+			{% endfor %}
+
+
+
+		</div>
+		<a href="/reset"><button>reset</button></a>
+	</div>
+</body>
+</html>
